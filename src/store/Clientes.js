@@ -28,14 +28,31 @@ export default {
           const settings = {
               method: 'GET',
           }
-          const url = 'https://picsum.photos/v2/list?page=2&limit=100';
+          const url = 'http://localhost:4000/api/clientes';
           const data =  await fetch(url, settings);
           const json =  await data.json();
           commit('LlenarItems', json);
       } catch(err) {
           console.log(err);
       }
-  }
+  },
+  eliminarClientes: async function({commit, dispatch}, datos) {
+    try {
+        const settings = {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos),
+        }
+        const url = 'http://localhost:4000/api/clientes';
+        const data =  await fetch(url, settings);
+        const json =  await data.json();
+        dispatch('cargarClientes')
+    } catch(err) {
+        console.log(err);
+    }
+}
   },
 
   modules: {

@@ -18,12 +18,22 @@
                     </v-chip>
                 </template>
                 <template v-slot:item.actions="{ item }">
-                    <v-icon small class="mr-2" @click="editItem(item)">
-                        mdi-pencil
-                    </v-icon>
-                    <v-icon small @click="deleteItem(item)">
-                        mdi-delete
-                    </v-icon>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-icon small class="mr-2" @click="editar(item)" v-bind="attrs" v-on="on">
+                                mdi-pencil
+                            </v-icon>
+                        </template>
+                        <span>Editar</span>
+                    </v-tooltip>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-icon small @click="eliminar(item)" v-bind="attrs" v-on="on">
+                                mdi-delete
+                            </v-icon>
+                        </template>
+                        <span>Eliminar</span>
+                    </v-tooltip>
                 </template>
             </v-data-table>
         </v-card>
@@ -31,6 +41,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     props: ['Titulo', 'Cabecera', 'Items'],
 
@@ -41,6 +53,18 @@ export default {
     },
 
     methods: {
+        ...mapActions('clientes', ['eliminarCliente']),
+
+        eliminar(item) {
+            this.$alertify.confirm(
+                '¿Desea eliminar este registro'+ item.id + '?',
+                () => {
+                    this.eliminarClientes(item);
+                    this.$alertify.success('Registro' + item.id + 'eliminado')
+                },
+                () => this.$alertify.error('No se eliminará el registro')
+            );
+        },
         getColor(edad) {
             if (edad > 40) return 'red'
             else if (edad > 29) return 'info'
