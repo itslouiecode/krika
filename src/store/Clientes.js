@@ -17,12 +17,13 @@ export default {
   },
 
   mutations: {
-    LlenarItems(state, data){
+    llenarItems(state, data){
       state.Items = data;
     }
   },
 
   actions: {
+
     cargarClientes: async function({commit}) {
       try {
           const settings = {
@@ -31,11 +32,30 @@ export default {
           const url = 'http://localhost:4000/api/clientes';
           const data =  await fetch(url, settings);
           const json =  await data.json();
-          commit('LlenarItems', json);
+          commit('llenarItems', json);
       } catch(err) {
           console.log(err);
       }
   },
+
+  agregarClientes: async function({commit, dispatch}, datos) {
+    try {
+        const settings = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos),
+        }
+        const url = 'http://localhost:4000/api/clientes';
+        const data =  await fetch(url, settings);
+        const json =  await data.json();
+        dispatch('cargarClientes')
+    } catch(err) {
+        console.log(err);
+    }
+  },
+
   eliminarClientes: async function({commit, dispatch}, datos) {
     try {
         const settings = {
@@ -52,7 +72,7 @@ export default {
     } catch(err) {
         console.log(err);
     }
-}
+  }
   },
 
   modules: {

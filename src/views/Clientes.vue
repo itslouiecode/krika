@@ -1,62 +1,57 @@
 <template>
-    <div>
-        <h1 class="text-center">CLIENTES</h1>
-        <tabla Titulo="CLIENTES" :Cabecera="Cabecera" :Items="Items.body"/>
-    </div>
+  <div>
+    <tabla class="mt-10" Titulo="CLIENTES" :Cabecera="Cabecera" :Items="Items.body"/>
+  </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import tabla from '@/components/clientes/tabla.vue'
-
+import { mapGetters, mapActions } from "vuex";
+import tabla from "@/components/clientes/tabla.vue";
 export default {
-    name: "CLIENTES",
+  name: "CLIENTES",
 
-    components: {
-        tabla
-    },
+  components: {
+    tabla,
+  },
 
-    created() {
-        this.cargarClientes();
-    },
+  created() {
+    this.cargarClientes();
+  },
 
-    data() {
-        return {
-            Cabecera: [
-                {
-                    text: 'ID',
-                    value: 'id'
-                },
-                {
-                    text: 'Nombre',
-                    value: 'nombre'
-                },
-                {
-                    text: 'Edad',
-                    value: 'edad'
-                },
-                {
-                    text: 'Profesion',
-                    value: 'profesion'
-                },
-                {
-                    text: 'Acciones',
-                    value: 'actions'
-                }
-            ]
-        }
-    },
+  data() {
+    return {
+      Cabecera: [
+        {
+          text: "ID",
+          value: "id",
+        },
+        {
+          text: "Nombre",
+          value: "nombre",
+        },
+        {
+          text: "Edad",
+          value: "edad",
+        },
+        {
+          text: "Profesion",
+          value: "profesion",
+        },
+        {
+          text: "Acciones",
+          value: "actions",
+        },
+      ],
+    };
+  },
 
-    methods: {
-        ...mapActions('clientes', ['cargarClientes'])
-    },
+  methods: {
+    ...mapActions("Clientes", ["cargarClientes"]),
+  },
 
-    computed: {
-        ...mapGetters('clientes', ['Items'])
-    }
+  computed: {
+    ...mapGetters("Clientes", ["Items"]),
+  },
 
-}
-
+};
 </script>
-
-<style></style>
